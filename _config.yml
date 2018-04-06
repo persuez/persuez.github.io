@@ -39,18 +39,7 @@ anchorjs: true                          # if you want to customize anchor. check
 
 # Gems
 # from PR#40, to support local preview for Jekyll 3.0
-plugins: 
-  - jekyll-paginate
-  - jekyll-sitemap
-
-#sitemap
-#url: "http://persuez.me"
-#root: /
-#permalink: :year/:month/:day/:title/
-#tag_dir: tags
-#archive_dir: archives
-#category_dir: categories
-
+gems: [jekyll-paginate]
 
 # Markdown settings
 # replace redcarpet to kramdown,
