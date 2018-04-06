@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      C程序设计语言
-subtitle:   C语言变长参数表
+title:      C程序设计
+subtitle:   C语言变长
 date:       2018-03-22
 author:     Persuez
 header-img: img/post-bg-ios9-web.jpg
