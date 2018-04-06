@@ -20,7 +20,7 @@ sidebar-avatar: /img/avatar-m      # use absolute URL, seeing it's used in both 
 RSS: false
 # weibo_username:     qiubaiying
 #zhihu_username:     qiubaiying
-github_username:    persuez
+github_username:    persue
 #facebook_username:  baiying.qiu.7
 #jianshu_username:   e71990ada2fd
 #twitter_username:   qiubaiying
@@ -64,8 +64,8 @@ gitalk:
   clientID: f0994600400263f31404                            #生成的clientID
   clientSecret: 460574eb69005c8c640884f1b4c08fd954a29a78    #生成的clientSecret
   repo: persuez.github.io   #仓库名称
-  owner: persuez   #github用户名
-  admin: persuez
+  owner: persue   #github用户名
+  admin: persue
   distractionFreeMode: true #是否启用类似FB的阴影遮罩
 
 
