@@ -73,7 +73,7 @@ gitalk:
 
 # Analytics settings
 # Baidu Analytics
-ba_track_id: 576f82ed2c65b84e3a7e71e4be26c4bc
+#ba_track_id: 576f82ed2c65b84e3a7e71e4be26c4bc
 
 # Google Analytics
 ga_track_id: 'UA-116125128-1'            # Format: UA-xxxxxx-xx
@@ -96,5 +96,5 @@ service-worker: true
 
 
 # Friends
-friends: [
-]
+#friends: [
+#]
