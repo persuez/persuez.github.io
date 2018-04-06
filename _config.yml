@@ -42,9 +42,12 @@ anchorjs: true                          # if you want to customize anchor. check
 gems: [jekyll-paginate]
 
 #sitemap
-url: "http://persuez.me" # the base hostname & protocol for your site
-plugins:
-  - jekyll-sitemap
+url: "http://persuez.me"
+root: /
+permalink: :year/:month/:day/:title/
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
 
 
 # Markdown settings
