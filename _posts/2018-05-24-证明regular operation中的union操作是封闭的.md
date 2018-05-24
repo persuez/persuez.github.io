@@ -13,7 +13,7 @@ $M_1$和$M_2$是两个DFA，且$L(M_1)=A,L(M_2)=A_2$，现在要证明存在一�
 # 证明
 设$L(M_1) = A_1, M_1 = (Q_1, \sum_1, \delta_1, q_1, F_1); L(M_2) = A_2, M_2 = (Q_2, \sum_2, \delta_2, q_2, F_2)$,我们构造$M = (Q, \sum, \delta, q_0, F)$，使得$L(M) = A_1 \cup A_2$,其中：
 1. $Q = \lbrace (r_1, r_2) \mid r_1 \in Q_1\ and\ r_2 \in Q_2 \rbrace$
-2. 这里我们假设$\sum = \sum_1 = \sum_2$，如果$\sum_1 \neq \sum_2$,我们只要使$\sum = \sum_1 \cup \sum_2$,并$Q_1 = Q_1 \cup r_{error1},Q_2 = Q_2 \cup r_{error2},\delta_1(r, a) = r_{error1}, r \in Q_1, a \notin \sum_1,\delta_2(r, a) = r_{error2}, r \in Q_2, a \notin \sum_2$
+2. 这里我们假设$\sum = \sum_1 = \sum_2$，如果$\sum_1 \neq \sum_2$,我们只要使$\sum = \sum_1 \cup \sum_2$,并$Q_1 = Q_1 \cup r_{error1}$,$Q_2 = Q_2 \cup r_{error2}$,$\delta_1(r, a) = r_{error1}$, $r \in Q_1$, $a \notin \sum_1$,$\delta_2(r, a) = r_{error2}$, $r \in Q_2$, $a \notin \sum_2$
 3. $\delta(r_1,r_2), a) = (\delta_1(r_1, a), \delta_2(r_2, a)), 其中(r_1, r_2) \in Q\ and\ a \in \sum$
 4. $q_0 = (q_1, q_2)$
 5. $F=\lbrace (r_1, r_2) \mid r_1 \in F_1\ or\ r_2 \in F_2 \rbrace$
