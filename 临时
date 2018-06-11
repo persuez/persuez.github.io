@@ -1,0 +1,185 @@
+#### 一、单选题
+1.下列HTML代码中，能在新窗口中打开新浪首页的是（C）。
+
+ A. ```<a src="http://www.sina.com.cn">新浪</a> ```
+ B. ```<a src="www.sina.com.cn" target="_blank">新浪</a> ```
+ C. ```<a href="http://www.sina.com.cn" target="_blank">新浪</a> ```
+ D. ```<a href="http://www.sina.com.cn">新浪</a>```
+
+2.查看如下 JavaScript 代码：
+```
+var a = "10";
+var b = 10;
+if (a == b)
+    alert("equal");
+if (a === b)
+    alert("same");
+```
+此代码运行后，效果为（A）。 
+ A. 只弹出”equal“ 
+ B. 只弹出”same“ 
+ C. 先弹出”equal“，再弹出”same“ 
+ D. 没有弹出显示
+
+3.查看如下 html 代码：
+```
+<div style="float:left;">div text</div>
+<p style="clear:left;">p text</p>
+```
+此代码在页面上的显示效果为（A）
+
+ A.```<div> 中的文本和 <p> 中的文本分两行显示，且文本左对齐```
+ B.```<div> 中的文本和 <p> 中的文本在一行上显示，且文本左对齐 ```
+ C.```<div> 中的文本和 <p> 中的文本分两行显示，且文本右对齐```
+ D.```<div> 中的文本和 <p> 中的文本在一行上显示，且文本右对齐```
+
+4.查看如下 html 代码：
+```
+<div id="header">
+    <a href="help.html">帮助</a>
+</div>
+<p>
+    <a href="home.html">主页</a>
+    <a href="user.html">个人中心</a>
+</p>
+```
+现需要定义样式，实现：当鼠标移入”帮助“链接上时，文本”帮助“的字体大小变为 20pt，而其他链接不变。下列样式定义中，正确的是（D）。
+
+ A. a:hover {font-size:20pt;} 
+ B. div.header a:hover {font-size:20pt;} 
+ C. #header a {font-size:20pt;} 
+ D. #header a:hover {font-size:20pt;}
+
+5.关于文档对象模型（Document Object Model），如下说法错误的是（C）
+
+A. DOM能够以编程方式访问和操作web页面内容。 
+B. DOM允许通过对象的属性和方法访问页面中的对象。 
+C. DOM能够创建动态的文档内容，但是不能删除文档对象。 
+D. DOM也提供了处理事件的接口，它允许捕获和响应用户以及浏览器的动作。
+
+6.下列关于银行家算法的叙述中，正确的是 （B）
+ A. 银行家算法可以预防死锁
+ B. 当系统处于安全状态时，系统中一定无死锁进程
+ C. 当系统处于不安全状态时，系统中一定会出现死锁进程
+ D. 银行家算法破坏了死锁必要条件中的“请求和保持”条件
+
+7.下面有关jquery事件的响应，描述错误的是？（B）
+A.onclick 鼠标点击某个对象
+B.onfocus 元素失去焦点
+C. onload 是某个页面的css js html 文档结构和图像被完全加载
+D. onmousedown 某个鼠标按键被按下
+
+8.TCP/IP 参考模型的网络层提供的是（A）。
+
+A.无连接不可靠的数据报服务
+B.无连接可靠的数据报服务
+C.有连接不可靠的虚电路服务
+D.有连接可靠的虚电路服务
+
+9.若一棵完全二叉树有768 个结点，则该二叉树中叶结点的个数是（C）。
+
+A.257
+B.258
+C.384
+D.385
+
+节点数n=n0+n1+n2；
+当节点数n为奇数，无度为1的节点；节点n为偶数，有一个度为1的节点；
+非空二叉树，n0=n2+1；
+综上所述：
+768=n0+n1+n2；
+n2=n0-1；
+所以n0=384
+10.某浏览器发出的HTTP 请求报文如下：
+![图片标题](https://ws1.sinaimg.cn/large/006aPatNgy1fs7gyyaiq9j305002jgln.jpg)
+下列叙述中，错误的是（C）。
+A.	该浏览器请求浏览index.html
+B.	Index.html存放在www.test.edu.cn上
+C.	该浏览器请求使用持续链接
+D.	该浏览器曾经浏览过www.test.edu.cn
+
+#### 二、问答题
+1. 请写出下列内容输出的结果
+```Console.log(0.1 + 0.2 == 0.3)  //false```
+2. 数据库
+Student(S#,Sname,Sage,Ssex)学生表 S#：学号 Sname：学生姓名 Sage：学生年龄 Ssex：学生性别 
+Course(C#,Cname,T#)课程表 C#：课程编号 Cname：课程名称 T#：教师编号 
+SC(S#,C#,score)成绩表 S#：学号 C#：课程编号 score：成绩 Teacher(T#,Tname)教师表 T#：教师编号： Tname：教师名字
+
+（1）查询所有课程成绩小于60的同学的学号、姓名：
+select S#, sname 
+from student 
+where s# not in (select student.s# from student, sc where s.s# = sc.s# and score>60);
+（2）查询姓‘李’的老师的个数
+select count(distinct(Tname))
+ from teacher 
+where tname like '李%';
+3. 常见排序算法的时间复杂度,空间复杂度
+![图片标题](https://ws1.sinaimg.cn/large/006aPatNgy1fs7h1ebyb2j30i40bgab9.jpg)
+4. 什么是盒子模型，说说你的理解
+5. 有无学过js框架，说说你对你学过的框架的认识,或者对框架的理解
+6.你如何获取浏览器URL中查询字符串中的参数？
+```
+function showWindowHref(){
+    var sHref = window.location.href;
+    var args = sHref.split('?');
+    if(args[0] == sHref){
+        return "";
+    }
+    var arr = args[1].split('&');
+    var obj = {};
+    for(var i = 0;i< arr.length;i++){
+        var arg = arr[i].split('=');
+        obj[arg[0]] = arg[1];
+    }
+    return obj;
+}
+var href = showWindowHref(); // obj
+console.log(href['name']); // xiaoming 
+```
+7. 简述一下你对HTML语义化的理解？（html 基础）
+    1. What: 根据内容的结构化（内容语义化），选择合适的标签（代码语义化）便于开发者阅读和写出更优雅的代码的同时让浏览器的爬虫和机器很好地解析。
+    2. Why: 为了在没有CSS的情况下，页面也能呈现出很好地内容结构、代码结构:为了裸奔时好看；
+	- 用户体验：例如title、alt用于解释名词或解释图片信息、label标签的活用；
+	- 有利于SEO：和搜索引擎建立良好沟通，有助于爬虫抓取更多的有效信息：爬虫依赖于标签来确定上下文和各个关键字的权重；
+	- 方便其他设备解析（如屏幕阅读器、盲人阅读器、移动设备）以意义的方式来渲染网页；
+	- 便于团队开发和维护，语义化更具可读性，是下一步吧网页的重要动向，遵循W3C标准的团队都遵循这个标准，可以减少差异化。
+8. display有哪些值？说明它们的作用。
+    1. block 块类型。默认宽度为父元素宽度，可设置宽高，换行显示。
+    2. none 缺省值。像行内元素类型一样显示。
+    3. inline 行内元素类型。默认宽度为内容宽度，不可设置宽高，同行显示。
+    4. inline-block 默认宽度为内容宽度，可以设置宽高，同行显示。
+    5. list-item 像块类型元素一样显示，并添加样式列表标记。
+    6. table 此元素会作为块级表格来显示。
+    7. inherit 规定应该从父元素继承display属性的值
+9. 分析下列程序代码，得出运行结果，解释其原因。
+```
+Promise.resolve(1)
+  .then((res) => {
+    console.log(res)
+    return 2
+  })
+  .catch((err) => {
+    return 3
+  })
+  .then((res) => {
+    console.log(res)
+  })
+```
+运行结果：
+1  2
+
+原因：
+promise 可以链式调用。提起链式调用我们通常会想到通过 return this 实现，不过 Promise 并不是这样实现的。promise 每次调用 .then 或者 .catch 都会返回一个新的 promise，从而实现了链式调用。
+10. n只蚂蚁以每秒$1cm$的速度在长为$Lcm$的竿子上爬行。当蚂蚁爬到竿子的端点时就会掉落。由于竿子太细，两只蚂蚁相遇时，它们不能交错通过，只能各自反向爬回去。对于每只蚂蚁，我们知道它距离竿子左端的距离$x_i$，但不知道它当前的朝向。请计算所有蚂蚁落下竿子所需的最短时间和最长时间。(最好js实现。最少将思路讲清楚）
+
+限制条件：
+1. $1 \leq L \leq 10^6$
+2. $1 \leq n \leq 10^6$
+3. $0 \leq x_i \leq L$
+
+样例：
+输入：
+$L = 10\\n = 3\\x = \lbrace\ 2, 6, 7\ \rbrace$
+输出：
+$min = 4（左、右、右）\\max = 8（右、右、右）$
