@@ -3,7 +3,7 @@ title: Persuez's Blog
 SEOTitle: Persuez's Blog
 header-img: img/post-bg-desk.jpg
 email: 1617609852lzc@gmail.com
-description: "Every failure is leading towards success."
+description: "Just do what you love."
 keyword: "C, C++, Linux"
 url: "https://persuez.me"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
@@ -96,5 +96,8 @@ service-worker: true
 
 
 # Friends
-#friends: [
-#]
+friends: [{
+  title: 'CSDN',
+  href: 'https://blog.csdn.net/snowlyw'
+  }
+]
