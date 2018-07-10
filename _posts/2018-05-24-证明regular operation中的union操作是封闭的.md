@@ -6,7 +6,8 @@ author: persuez
 header-img: img/post-bg-ios9-web.jpg
 catalog: true
 tags:
-  - 计算理论 DFA
+  - 计算理论
+  - DFA
 ---
 # 证明思路
 $M_1$和$M_2$是两个DFA，且$L(M_1)=A,L(M_2)=A_2$，现在要证明存在一个DFA$M$可以recognizes $A \cup A_2$(我们将会找到这样一个DFA，而不仅仅是存在)，即$L(M)=A \cup A_2$。我们找这样一个DFA的方法是通过模拟simulate。但是在读到一个字符时，我们的DFA要往哪个状态转移呢？DFA不允许我们遇到一个字符可以有多条路走(所以之后我们用NFA证明会很简单)，那怎么办呢？这时候，聪明的人用二元组的方式表示转移状态，即$(r_i,r_j)$，其中，$r_i \in Q_1，r_j \in Q_2$。这样子，$M$的状态集$Q=Q_1 × Q_2$，'$×$'表示笛卡尔积。那接下来就容易证明了。
