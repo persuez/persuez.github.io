@@ -109,9 +109,54 @@ int foom()
 - using diclaration 如果名字冲突了，编译器会报错；而using directive会覆盖了namespace的版本，而不做任何提示。
 
 #### namespace 嵌套
+基本语法如下：
+
+``` cpp
+namespace elements {
+  namespace fire {
+    int flame;
+    ...
+  }
+  float water;
+}
+// 可以访问fire用
+using namespace elements::fire;
+
+namespace myth {
+  using Jill::fetch;
+  using namespace elements;
+  using std::cout;
+  using std::cin;
+}
+int main()
+{
+  std::cin >> myth::fetch;
+  // 或者
+  std::cin >> Jill::fetch;
+
+  // 访问 elements
+  using namespace myth; // using namespace myth; using namespace elements;这两条语句和上面一条是等价的
+
+}
+```
+
+#### 别名
+namespace可以有别名。可以用来简化嵌套namespace的使用：
+
+``` cpp
+namespace MEF = myth::elements::fire;
+using MEF::flame;
+```
 
 ### Unnamed namespace
 基本语法如下：
 
 ``` cpp
-namespace
+namespace {
+  int ice;
+  int bandycoot;
+}
+```
+它有以下特点：
+- Unnamed namespace 就像在其前面用了using directive一样，我们可以直接访问其成员。
+- 因为其没有名字，所以只能在当前定义的文件中使用。也就是说，这个提供了一种类似关键字```static```的能力，只能在内部链接。
