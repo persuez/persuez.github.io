@@ -15,7 +15,7 @@ C++中namespace简单来说就是用来控制标志符（如变量，函数，�
 ![potential scope and scope](https://ws1.sinaimg.cn/large/006aPatNgy1ftc0gdaotxj312x0x6adc.jpg)
 
 ## namespace关键字
-C++中namespace关键字定义了一个declarative region，所所以在一个namespace中声明的标志符和其他namespace中声明的同名标志符是没有名字冲突的。
+C++中namespace关键字定义了一个declarative region，所以在一个namespace中声明的标志符和其他namespace中声明的同名标志符是没有名字冲突的。
 
 ### 基本语法
 我们定义两个namespace，分别命名为Jack和Jill，如下：
@@ -46,7 +46,7 @@ namespace Jack {
 }
 ```
 ### 访问namespace中的成员
-有两种方法可以访问namespace中的成员：
+除了一般的作用域运算符（::）直接访问namespace中的成员外，我们还有两种方法可以帮助我们轻松地多次访问namespace中的成员：
 - *using* declaration
 - *using* directive
 简单来说，前者可以让我们访问特定的成员，而后者则可以让我们访问整个namespace。下面就具体介绍两种方法：
@@ -71,3 +71,47 @@ int main()
   ...
 }
 ```
+这里需要注意的是using declaration 如果访问的是函数```void fetch()```，那么语法如下：```using Jack::fetch```。注意，我们并没有指定函数的返回类型，参数信息，唯一指定的就是函数名，所以using declaration会把该函数的所有重载类型（如果有）都引用进来。
+
+#### using directive
+using directive 将使namespace中的所有成员可访问。如我们平常用的```using namespace std;```就是一个using directive。我们可以将using directive放在任何地方，但这也会造成它的可以使用的范围不同，但注意使用范围并不代表scope或者potential scope，这个可以从下面的例子看到。和using declaration的另外一个大的不同地方是当它在局部使用时，声明相同的局部变量不会报错，而是声明的局部变量会覆盖掉namespace中的成员。如：
+
+``` cpp
+namespace Jill {
+  double bucket(double n) { ... }
+  double fetch;
+  struct Hill { ... };
+}
+
+char fetch; // global variable
+
+int main()
+{
+  using namespace Jill; // Jill::fetch没有局部作用域，因为它没有覆盖掉全局的fetch，并且还可以声明一个局部的fetch，所以作用范围和作用域是不同的。
+  Hill Thrill;
+  double water = bucket(2); // use Jill::bucket
+  double fetch; // 注意：这里不会出现错误，而是覆盖了Jill::fetch
+  cin >> fetch; // 读入局部的fetch
+  cin >> Jill::fetch; // 读入Jill的fetch
+  cin >> ::fetch; // 读入全局fetch
+}
+
+int foom()
+{
+  Hill top; // 出错！
+  Jill::Hill top; // 正确
+}
+```
+
+#### 用using declaration 还是 using directive
+一般来说，using declaration比using directive 安全。因为
+- using declaration明确的告诉我们可以用哪个成员。
+- using diclaration 如果名字冲突了，编译器会报错；而using directive会覆盖了namespace的版本，而不做任何提示。
+
+#### namespace 嵌套
+
+### Unnamed namespace
+基本语法如下：
+
+``` cpp
+namespace
