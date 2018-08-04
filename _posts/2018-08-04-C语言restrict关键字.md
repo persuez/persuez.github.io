@@ -6,9 +6,10 @@ author: persuez
 ---
 ### restrict关键字
 今天看APUE，发现了fgets的原型是```char *fgets(char *restrict buf, int n, FILE *restrict fp);```，然后一脸懵逼，```restrict```是什么鬼，于是跑去查了一下，原来和```pointer aliasing```有关，和编译器优化有关。
+
 1. ```pointer aliasing```就是两个（多个）指针指向同一块内存区域。因为这个问题编译器不能优化代码（指针解引用）。如：
 
-  ``` c
+  ```
   int foo(int *a, int *b)
   {
     *a = 1;
@@ -20,7 +21,7 @@ author: persuez
 
 2. 如果我们已经知道a和b不可能指向同一块区域，使编译器可以进行优化，那么我们可以使用```restrict```关键字。如：
 
-  ``` c
+  ``` 
   int foo(int *restrict a, int *restrict b)
   {
     *a = 1;
