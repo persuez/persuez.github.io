@@ -33,5 +33,7 @@ author: persuez
 ---
 ### 参考
 [pointer aliasing](https://en.wikipedia.org/wiki/Pointer_aliasing)
+
 [restrict](https://en.wikipedia.org/wiki/Restrict)
+
 [一篇有趣的关于编译器优化的文章](https://archive.is/20130112201318/http://www.futurechips.org/tips-for-power-coders/how-to-trick-cc-compilers-into-generating-terrible-code.html)
