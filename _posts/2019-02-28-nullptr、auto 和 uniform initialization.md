@@ -10,6 +10,7 @@ author: persuez
 3. `uniform initialization`
 
 先介绍个小知识，C++ 11后的编译器可以识别：`vector <list<int>>`，不一定要写成`vector <list<int> >`。
+
 ---
 
 ## nullptr 关键字
