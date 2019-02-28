@@ -51,7 +51,7 @@ vector <int> {1,2,3,4,5};
 complex<double> c{1.0,2.3};
 ```
 背后的原理是通过 `initializer_list<T>`，这个东西的背后是 `std::array<T, n>`，如果所构造的类型有参数为 initializer_list 的构造函数（可能是编译器自己构造的，仅供其使用的函数），则调用该函数；否则要求有相同数量参数的构造函数，如 complex 类要有一个带有两个形参的构造函数，然后编译器将 array<T, n> 中的元素逐个拆分然后传进该函数调用。
-**注意**：用 uniform initialization 赋初值不允许 narrowing conversion（所有可能把原值窄化的转换）。即：
+**注意**：用 uniform initialization 赋初值不允许 narrowing conversion（所有可能把原值窄化的转换），也有的编译器仅仅是 warning。即：
 ```
 int a{1.0}; // error
 int a = {1.0}; // error
