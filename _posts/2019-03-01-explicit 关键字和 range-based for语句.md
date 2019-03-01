@@ -67,3 +67,19 @@ int main()
     bool nb2 = static_cast<bool>(b2); // OK ：static_cast 进行直接初始化
 }
 ```
+
+---
+### range-based for
+这是一个很小的知识点，直接看例子：
+```
+for (auto i : {1,2,3,4}) {
+  cout << i << endl;
+  // 值传递
+}
+vector<string> vec;
+...
+for (auto &i : vec) {
+  ...
+  // 可能会导致 vec 中的元素改变，因为是引用传值
+}
+```
