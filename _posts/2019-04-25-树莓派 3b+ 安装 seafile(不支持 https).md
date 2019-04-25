@@ -62,11 +62,11 @@ author: persuez
 
 3. 安装 seafile
 
-  1. cd 到 seafile 解压的目录
-  2. 运行 ./setup-seafile-mysql.sh (不能加 sudo)，端口号那些请默认，seafile-data 目录我是放在了 cloud 目录，也就是 /dev/sda1 挂载的目录
-  3. 启动：
-    1. ./seafile.sh start
-    2. ./seahub.sh start
+      1. cd 到 seafile 解压的目录
+      2. 运行 ./setup-seafile-mysql.sh (不能加 sudo)，端口号那些请默认，seafile-data 目录我是放在了 cloud 目录，也就是 /dev/sda1 挂载的目录
+      3. 启动：
+        1. ./seafile.sh start
+        2. ./seahub.sh start
 
 4. autossh 隧道打穿内网
 
