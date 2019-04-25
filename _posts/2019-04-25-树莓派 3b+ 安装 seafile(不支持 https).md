@@ -29,12 +29,14 @@ author: persuez
 至此，前期工作准备好了。接下来
 步骤如下：
 1. 下载对应版本 [seafile](https://github.com/haiwen/seafile-rpi/releases/download/v6.3.4/seafile-server_6.3.4_stable_pi.tar.gz)， 然后解压。
+
   ```
   1. tar -zxvf seafile-server_6.3.4_stable_pi.tar.gz
   2. mkdir installed # 根据官方文档建立 installed 目录便于管理
   3. mv seafile-server_6.3.4_stable_pi.tar.gz installed
   ```
 2. 下载 mysql-server（可能很难搞定，会出很多问题）
+
   ```
   1. sudo apt-get autoremove --purge mysql-server # 先清除
   2. sudo apt-get remove mysql-common
@@ -53,6 +55,7 @@ author: persuez
   11. 尝试 mysql -u root -p，如果输入密码登录不成功，请继续网上查找资料，不然不要往下走，亲身经验告诉你很可怕
   ```
 3. 安装 seafile
+
   1. cd 到 seafile 解压的目录
   2. 运行 ./setup-seafile-mysql.sh (不能加 sudo)，端口号那些请默认，seafile-data 目录我是放在了 cloud 目录，也就是 /dev/sda1 挂载的目录
   3. 启动：
