@@ -35,6 +35,7 @@ author: persuez
   2. mkdir installed # 根据官方文档建立 installed 目录便于管理
   3. mv seafile-server_6.3.4_stable_pi.tar.gz installed
   ```
+
 2. 下载 mysql-server（可能很难搞定，会出很多问题）
 
   ```
@@ -54,6 +55,7 @@ author: persuez
   10. sudo /etc/init.d/mysql start
   11. 尝试 mysql -u root -p，如果输入密码登录不成功，请继续网上查找资料，不然不要往下走，亲身经验告诉你很可怕
   ```
+
 3. 安装 seafile
 
   1. cd 到 seafile 解压的目录
@@ -66,6 +68,7 @@ author: persuez
 
   通过 apt install 安装 autossh。参考：https://github.com/ma6174/blog/issues/7。（我们这里要转发 8000 端口，VPS 中用来转发此端口的端口要开放）注意点是树莓派的用户名和 VPS 的要不一样。VPS 要开启 ssh 转发功能，即在VPS 中的/etc/ssh/sshd_config 里加上GatewayPorts yes。
   至此，你已经可以访问 seafile 了。但还有一点工作。
+  
 5. 为了可以上传文件，必须要通过 autossh 转发 8082 端口，然后通过 web 端登录 seafile，在系统管理员界面设置中更改 SERVICE_URL 为 http://example.com:[VPS 转发 8000 的端口]，FILE_SERVER_ROOT 为 http://example.com:[VPS 转发 8082 的端口]。
 
 结束。
