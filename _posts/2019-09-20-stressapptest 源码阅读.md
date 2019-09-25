@@ -1,5 +1,5 @@
 ---
-published: true
+published: false
 layout: post
 author: persuez
 header-img: img/post-bg-ios9-web.jpg
@@ -28,7 +28,9 @@ tags:
 | -C | cpu_stress_threads_ | ARG_IVALUE
 | -l | logfilename_ | ARG_SVALUE
 | -v | verbosity_ | ARG_IVALUE
+| --force_errors_like_crazy | crazy_error_injection_ | ARG_KVALUE
 
+pe_q_implementation_ 锁的粒度，默认为 细粒度锁（更好的性能）
 
 没有直接改变 disk_pages_（每个文件的  page 数），它和 filesize 有关，filesize =  page_length_ * disk_pages_; page_length_ 可以通过指定 -p 修改， filesize 通过 --filesize 修改，之后通过 disk_pages = filesize / page_length_ 修改，如果 disk_pages_ 为 0，则将它强制变为 1。
 
@@ -40,7 +42,7 @@ chip width = channel_width_ / channels_[0].size(), chip size 不能小于 8。
 
 channel_hash_ 可以指定，如果channels_.size() 为 1，则强制 channel_hash_ 为 0
 
-logprintf priority 大于 verbosity 时，什么都不做。
+logprintf priority 大于 verbosity 时，什么都不做。 (VLogF 函数，默认是 20)
 
 
 
@@ -96,3 +98,22 @@ reserve_mb_ 只有在不使用 hugepages 时才会产生影响。
 在这个例子中，一个i7 CPU支持两个Channel（双通道），每个Channel上可以插俩个DIMM,而每个DIMM由两个rank构成，8个chip组成一个rank。由于现在多数内存颗粒的位宽是8bit,而CPU带宽是64bit，所以经常是8个颗粒可以组成一个rank。所以小张的内存条2R X 8的意思是由2个rank组成，每个rank八个内存颗粒(为啥我们以后讲)。由于整个内存是4GB，我们可以算出单个内存颗粒是256MB。
 
 DQS就是DQ数据的时钟，主控read数据时，DQS和DQ边沿对齐，write数据时，DQS处于DQ中间位置
+
+### 四、Run
+pthread_mutex_t worker_lock_;  // Lock access to the worker thread structure. 
+typedef vector<WorkerThread*> WorkerVector;
+typedef map<int, WorkerVector*> WorkerMap; 
+// Contains all worker threads.
+WorkerMap workers_map_; 
+
+根据 error limit 退出：由 --max_errors 设置 sat 类的 max_errorcount_，统计所有线程的 error_count_  （worker 类）
+
+sat.cc 中 NextOccurance 函数的意义是计算某种动作（如下次打印 seconds remaind ）的最少 unixtime，譬如 start 从 0 开始，freq 为 3 秒一次（freq 为 print_delay_)，那第一次是在第 3 秒处打印，第二次是在第 6 秒处，第三次是第 9 秒。。。程序设计不是间隔 freq 打印一次是为了方便用户知道啥时会执行一次动作。（也许并不是每次都会执行，如开始为 0， freq 为 3，而下一次的 now 为 6，那就少打印了一次）
+
+细粒度锁定时，根据 FineLockPEQueue 的 page_is_valid 函数的参数 struct page_entry 的 pattern 成员是否为 NULL 判断, 非空即有效。
+
+细粒度锁 GetRandomWithPredicateTag 中对 pagelocks_[index] 加锁，在 PutValid 中释放锁
+
+细粒度锁获取一个 valid 页面
+struct page_entry src;
+Sat::GetValid(&src); => Sat::GetValid(&src, kDontCareTag); => FineLockPEQueue::GetValid(&src, kDontCareTag); => FineLockPEQueue::GetRandomWithPredicateTag(&src, page_is_valid,kDontCareTag); =>
