@@ -20,14 +20,15 @@ module_init(watchpoint_init);
 ```c
 static int __init watchpoint_init(void)
 {
-	proc_watchpoints = proc_mkdir("watchpoints", NULL); ----------------------------------------------------- /* 1 */
+	proc_watchpoints = proc_mkdir("watchpoints", NULL); ------------------------- /* 1 */
 
-	INIT_LIST_HEAD(&tracked_data.list); --------------------------------------------------------------------- /* 2 */
-	misc_register(&watchpoints_misc); ----------------------------------------------------------------------- /* 3 */
+	INIT_LIST_HEAD(&tracked_data.list); ----------------------------------------- /* 2 */
+	misc_register(&watchpoints_misc); ------------------------------------------- /* 3 */
 	pr_info("module successfully loaded\n");
 	return 0;
 }
 ```
+
 1. `proc_watchpoints` 是一个全局变量。一开始就遇到了和 /proc 相关的调用，我们来看看 `proc_mkdir` 的原型：
    ```c
    struct proc_dir_entry *proc_mkdir(const char *name, struct proc_dir_entry *parent)；
@@ -62,12 +63,100 @@ static int __init watchpoint_init(void)
             .release = NULL,
         };
         ```
+        值得一看的是，`unlocked_ioctl`，为什么不是 `ioctl`，这个和 Big Kernel Lock 有关，这个大概的情况可以去[链接](https://lwn.net/Articles/119652/)了解。现在应用层调用 `ioctl` 就会跑到执行 `watchpoints_ioctl` 函数。初始化到此结束，接着应用层会通过 `ioctl` 操作接口 `/dev/watchpoints`，因此我们接下来看 `watchpoints_ioctl` 函数。
 
+## ioctl 接口
+watchpoints 的 ioctl 接口函数是 `watchpoints_ioctl` 函数。
+```c
+static long watchpoints_ioctl(struct file *file, unsigned int cmd,
+			      unsigned long ptr_message)
+{
+	struct watchpoint_message data; ------------------------------------------ /* 1 */
+	long ret_val;
 
+	/* TODO: check ret_val */
+	copy_from_user(&data, (void *) ptr_message, sizeof(data));
 
+	pr_info("Received from pid %d, ptr %p, size %ld\n", current->pid,
+		data.data_ptr, data.data_size);
 
+	switch (cmd) { ----------------------------------------------------------- /* 2 */
+	case ADD_WATCHPOINT:
+		ret_val = add_watchpoint(data);
+		break;
+	case REMOVE_WATCHPOINT:
+		ret_val = remove_watchpoint(data);
+		break;
+	default:
+		pr_info("Watchpoints was sent an unknown command %d\n",
+			cmd);
+		ret_val = -EINVAL;
+		break;
+	}
 
+	return ret_val;
+}
+```
+1. `watchpoint_message` 结构体是通过 watchpoints 设置断点所必须的结构体，也就是说，在应用层必须定义一个这样的结构体来和驱动进行数据传送。`watchpoint_message` 结构体的声明如下：
+   ```c
+    struct watchpoint_message {
+        void *data_ptr;
+        long data_size;
+    };
+   ```
+   - `data_ptr` 成员是需要设置断点的地址
+   - `data_size` 成员是地址大小范围。
 
+2. `watchpoints_ioctl` 提供了两个 cmd：`ADD_WATCHPOINT` 和 `REMOVE_WATCHPOINT`。这里只关注 `ADD_WATCHPOINT`，也就是如何设置断点。在这里，只是调用了 `add_watchpoint` 函数，因此我们接下来转向 `add_watchpoint` 函数。
+
+## add_watchpoint
+先看看 `add_watchpoint` 函数的原型：`static long add_watchpoint(struct watchpoint_message data);`, 它的参数 `data` 是从用户空间传进来的，包含了断点地址和地址范围。
+```c
+static long add_watchpoint(struct watchpoint_message data)
+{
+	struct perf_event *perf_watchpoint; ----------------------------------- /* 1 */
+
+	perf_watchpoint = initialize_watchpoint(data, current->pid);
+
+	if (IS_ERR(perf_watchpoint)) {
+		pr_info("Could not set watchpoint\n");
+		return -EBUSY;
+	}
+
+	prepare_proc_entry(perf_watchpoint, data.data_size); ------------------ /* 2 */
+
+	return 0;
+}
+```
+1. `perf_event` 这个结构体具体的没仔细看，但是它和我们要注册的断点的上下文相关，注册断点返回的 `perf_watchpoint` 变量与断点的上下文，一些其他信息绑定了，这个在 `initialize_watchpoint` 函数中实现了。
+2. `prepare_proc_entry` 函数以及之后的调用链是重点，之后再分别讲述。因此 `add_watchpoint` 这个函数就调用了两个函数：`initialize_watchpoint` 和 `prepare_proc_entry` 函数，接下来分别讲这两个函数。
+
+## initialize_watchpoint 函数
+`initialize_watchpoint` 函数是真正初始化硬件断点的地方。
+```c
+static struct perf_event *initialize_watchpoint(struct watchpoint_message
+						data, pid_t pid)
+{
+	struct perf_event *perf_watchpoint;
+	struct task_struct *tsk;
+	struct perf_event_attr attr;
+
+	/* Initialize watchpoint */
+	hw_breakpoint_init(&attr); -------------------- /* 1 */
+	attr.bp_addr = (u64) data.data_ptr;
+	attr.bp_len = HW_BREAKPOINT_LEN_4;
+	attr.bp_type = HW_BREAKPOINT_W;
+
+	tsk = pid_task(find_vpid(pid), PIDTYPE_PID);
+
+	perf_watchpoint =
+	    register_user_hw_breakpoint(&attr, watchpoint_handler,
+					NULL, tsk);
+
+	return perf_watchpoint;
+}
+```
+1. `hw_breakpoint_init` 函数初始化了一个 `perf_event_attr` 结构体，并在接下来
 
 
 
