@@ -9,10 +9,10 @@ C++中namespace简单来说就是用来控制标志符（如变量，函数，�
 
 ## 简单术语
 - *declarative region*: 指标志符声明的区域。具体见图一。
-![declarative region](https://ws1.sinaimg.cn/large/006aPatNgy1ftc040hj5gj30yh0x6n0f.jpg)
+![declarative region.jpg](http://persuez-image.oss-cn-shenzhen.aliyuncs.com/2020/08/15/84547a56e0615.jpg)
 - *potential scope*: 指从该标志符的声明点到其declarative region的终点。也就是一个标志符的最大可能作用域。具体见图二。
 - *scope*: 指标志符的可见区域。具体见图二。
-![potential scope and scope](https://ws1.sinaimg.cn/large/006aPatNgy1ftc0gdaotxj312x0x6adc.jpg)
+![potential scope.jpg](http://persuez-image.oss-cn-shenzhen.aliyuncs.com/2020/08/15/63e0ee60d24f8.jpg)
 
 ## namespace关键字
 C++中namespace关键字定义了一个declarative region，所以在一个namespace中声明的标志符和其他namespace中声明的同名标志符是没有名字冲突的。
